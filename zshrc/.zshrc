@@ -146,6 +146,19 @@ export FZF_ALT_C_OPTS="--preview 'eza --icons=always --tree --color=always {} | 
 # fzf preview for tmux
 export FZF_TMUX_OPTS=" -p90%,70% "  
 
+# open file in nvim
+alias n='nvim $(fzf -m --preview="bat --color=always {}")'
+
+# widget function to find and open file in nvim
+fzf-nvim-widget() {
+  zle push-input
+  BUFFER="nvim \$(fzf -m --preview='bat --color=always {}')"
+  zle accept-line
+}
+zle -N fzf-nvim-widget
+bindkey '^U' fzf-nvim-widget
+
+
 ## -----------------------------
 ##  Zoxide Integration
 ## -----------------------------
