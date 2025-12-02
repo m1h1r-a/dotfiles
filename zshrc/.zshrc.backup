@@ -11,23 +11,11 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 ## -----------------------------
-##  Load Powerlevel10k Instant Prompt (Early for Speed)
-## -----------------------------
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-## -----------------------------
 ##  Load Essential Plugins
 ## -----------------------------
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-
-## -----------------------------
-##  Load Aloxaf/fzf-tab (Deferred for slight optimization)
-## -----------------------------
-zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
 
 ## -----------------------------
@@ -56,6 +44,10 @@ fi
 ## -----------------------------
 ##  Load Powerlevel10k
 ## -----------------------------
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 zinit ice depth=1
 zinit load romkatv/powerlevel10k
 
@@ -70,15 +62,9 @@ fi
 export PATH
 
 ## -----------------------------
-##  Enable Zsh Completion (Optimized)
+##  Enable Zsh Completion
 ## -----------------------------
-autoload -Uz compinit
-# Check if .zcompdump is older than 24 hours for better performance
-if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C  # Skip security check for speed
-fi
+autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
@@ -131,12 +117,6 @@ alias rls='exa'
 
 alias xit='exit'
 
-# open file in nvim
-alias n='nvim $(fzf -m --preview="bat --color=always {}")'
-
-## -----------------------------
-##  Functions
-## -----------------------------
 # C++ compilation and run function
 runcpp() {
     if [[ -z "$1" ]]; then
@@ -146,22 +126,8 @@ runcpp() {
     g++ "$1" && ./a.out
 }
 
-# Yazi function
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-tree() {
-  ls --long --tree --level "$1"
-}
-
 ## -----------------------------
-##  Enable FZF Integration (IMMEDIATE - for Alt+C, Ctrl+R, etc.)
+##  Enable FZF Integration
 ## -----------------------------
 [[ -f /usr/share/fzf/shell/completion.zsh ]] && source /usr/share/fzf/shell/completion.zsh
 [[ -f /usr/share/fzf/shell/key-bindings.zsh ]] && source /usr/share/fzf/shell/key-bindings.zsh
@@ -180,6 +146,9 @@ export FZF_ALT_C_OPTS="--preview 'eza --icons=always --tree --color=always {} | 
 # fzf preview for tmux
 export FZF_TMUX_OPTS=" -p90%,70% "  
 
+# open file in nvim
+alias n='nvim $(fzf -m --preview="bat --color=always {}")'
+
 # widget function to find and open file in nvim
 fzf-nvim-widget() {
   zle push-input
@@ -189,8 +158,9 @@ fzf-nvim-widget() {
 zle -N fzf-nvim-widget
 bindkey '^U' fzf-nvim-widget
 
+
 ## -----------------------------
-##  Zoxide Integration (IMMEDIATE)
+##  Zoxide Integration
 ## -----------------------------
 eval "$(zoxide init zsh)"
 
@@ -209,9 +179,23 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
+
 ## -----------------------------
-##  NVM Integration (Original - since you don't use it much)
+## Yazi
 ## -----------------------------
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+tree() {
+  ls --long --tree --level "$1"
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
