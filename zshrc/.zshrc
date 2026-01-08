@@ -126,8 +126,8 @@ alias c='z'
 alias rclear='clear'
 
 # File Listing (Better `ls`)
-alias ls='exa'
-alias rls='exa'
+alias ls='exa -l'
+alias rls='exa -l'
 
 alias xit='exit'
 
