@@ -1,0 +1,152 @@
+@import "one-dark.css";
+
+* {
+    border: none;
+    border-radius: 2px;
+
+    font-family: "Adwaita Sans", "JetBrainsMono Nerd Font Propo", sans-serif;
+    font-weight: bold;
+    font-size: 12px; /* Slightly bigger than 11px */
+
+    min-height: 0;
+    padding: 0;
+    margin: 3px 0 0 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+tooltip {
+    background: @bg0;
+    border: 1px solid @bg3;
+    border-radius: 10px;
+}
+
+tooltip label {
+    color : @fg;
+    padding : 8px;
+}
+
+#clock tooltip {
+    border-radius: 12px;
+    padding: 15px;
+}
+
+#clock tooltip label {
+    padding: 12px;
+    font-size: 14px;
+}
+
+#workspaces {
+    background-color: @bg0;
+    padding: 2px 3px; /* Increased for better text centering */
+    margin: 0 0 0 8px;
+    border-radius: 20px;
+    border: 3px solid @bg1;
+    color: @fg;
+}
+
+#workspaces button {
+    padding: 0px 5px 5px 5px; /* Added vertical padding for centering */
+    margin : 0px 4px;
+    border-radius: 11px;
+    color : transparent;
+    background-color: @bg1;
+    transition : all 0.3s ease-in-out;
+    min-height: 20px; /* Ensure minimum height for text centering */
+    min-width: 14px;
+}
+
+#workspaces button.active {
+    background-color: @blue;
+    color: @bg0;
+    border-radius: 14px;
+    min-width: 30px;
+    transition : all 0.3s ease-in-out;
+    font-size: 12px;
+}
+
+#workspaces button:hover {
+    background-color:@purple;
+    color:@bg0;
+    border-radius: 16px;
+    min-width:35px;
+    background-size: 400% 400%;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+    color: @bg0;
+    border-radius:16px;
+    min-width:35px;
+    background-size: 400% 400%;
+    transition : all 0.3s ease-in-out;
+}
+
+#battery,
+#pulseaudio,
+#network,
+#clock,
+#mpris,
+#tray,
+#custom-notification {
+    background-color: @bg0;
+    padding: 2px 12px; /* Increased padding for slightly bigger modules */
+    margin : 0 0 0 8px;
+    border-radius: 30px;
+    border: 3px solid @bg1;
+}
+
+#clock {
+    color: @purple;
+}
+
+#mpris {
+    color: @blue;
+    padding: 4px 10px;
+    font-size: 15px;
+}
+
+#mpris.playing {
+    color: @green;
+}
+
+#mpris.paused {
+    color: @yellow;
+}
+
+#custom-notification {
+    color:@fg;
+    margin: 0 8px 0 8px;
+}
+
+#tray {
+    padding: 4px 10px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
+}
+
+#pulseaudio {
+    color:@yellow;
+}
+
+#network {
+    color:@blue;
+}
+
+#battery {
+    color:@green;
+    margin: 0 8px 0 8px;
+}
+
+tooltip decoration {
+    background-color: transparent;
+}
