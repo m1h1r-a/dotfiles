@@ -104,6 +104,7 @@ alias windows='sudo grub-reboot 4 && reboot'
 alias files='xdg-open .'
 alias fe='files && exit'
 alias history='history | fzf'
+alias la='ls -la'
 
 # Clear Aliases (Fix Common Mistakes)
 alias clea='clear'

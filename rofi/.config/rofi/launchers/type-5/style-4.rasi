@@ -8,15 +8,40 @@
  **/
 
 /*****----- Configuration -----*****/
+// configuration {
+// 	modi:                       "drun,run,filebrowser,window";
+//     show-icons:                 true;
+//     display-drun:               "";
+//     display-run:                "";
+//     display-filebrowser:        "";
+//     display-window:             "";
+// 	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+// 	window-format:              "{w}   {c}   {t}";
+// }
+
 configuration {
-	modi:                       "drun,run,filebrowser,window";
+    /* Added 'calc' to the list of enabled modes */
+    modi:                       "drun,run,filebrowser,window,calc";
+    
     show-icons:                 true;
     display-drun:               "";
     display-run:                "";
     display-filebrowser:        "";
     display-window:             "";
-	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-	window-format:              "{w}   {c}   {t}";
+    
+    /* Added Icon for Calculator */
+    display-calc:               "";
+    
+    drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+    window-format:              "{w}   {c}   {t}";
+    
+    /* BEHAVIOR SETTINGS */
+    
+    /* When you press Enter on a calculation, copy result to clipboard (Wayland) */
+    calc-command:               "echo -n '{result}' | wl-copy";
+    
+    /* Don't close Rofi immediately if you select a calculation (optional) */
+    /* calc-keep-open: true; */
 }
 
 /*****----- Global Properties -----*****/
